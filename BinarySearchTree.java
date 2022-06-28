@@ -3,9 +3,12 @@ import java.util.Queue;
 
 public class BinarySearchTree {
     public static void main(String[] args) {
-        MyBinarySearchTree bst = new MyBinarySearchTree();
+        MyBinarySearchTree bst = new MyBinarySearchTree(4);
+        bst.add(2);
+        bst.add(5);
+        bst.add(10);
         bst.levelOrderTraversal();
-        System.out.println(bst.search(6));
+        System.out.println(bst.height(bst.root));
     }
 
     static class Node {
@@ -94,6 +97,13 @@ public class BinarySearchTree {
                 }
                 return false;
             }
+        }
+
+        int height(Node root) {
+            if (root == null) {
+                return -1;
+            }
+            return Math.max(height(root.left), height(root.right)) + 1;
         }
 
         void deleteTree() {
