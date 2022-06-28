@@ -4,13 +4,7 @@ import java.util.Queue;
 public class BinaryTree {
     public static void main(String[] args) {
         MyBinaryTree mTree = new MyBinaryTree(4);
-        mTree.add(5);
-        mTree.add(6);
-        mTree.add(7);
-        mTree.add(2);
-        mTree.add(8);
-        mTree.levelOrderTraversal();
-        mTree.deleteNode(8);
+        mTree.deleteNode(4);
         mTree.levelOrderTraversal();
 
     }
@@ -118,11 +112,13 @@ public class BinaryTree {
         }
 
         void deleteNode(int deleteVal) {
-            // NULL not removing deepest node
             if (root == null) {
                 return;
+            } else if (root.val == deleteVal && root.left == null && root.right == null) {
+                root = null;
+                return;
             } else {
-                Node keyNode = null, lastNode = null;
+                Node keyNode = null, lastNode = null, left = null, right = null;
                 Queue<Node> q = new ArrayDeque<>();
                 q.offer(root);
                 while (!q.isEmpty()) {
@@ -132,13 +128,23 @@ public class BinaryTree {
                     }
                     if (lastNode.left != null) {
                         q.offer(lastNode.left);
+                        left = lastNode;
+                        right = null;
                     }
                     if (lastNode.right != null) {
                         q.offer(lastNode.right);
+                        right = lastNode;
+                        left = null;
                     }
+
                 }
+
                 keyNode.val = lastNode.val;
-                lastNode = null;
+                if (left != null) {
+                    left.left = null;
+                } else {
+                    right.right = null;
+                }
             }
         }
 
