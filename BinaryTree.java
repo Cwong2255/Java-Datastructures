@@ -6,7 +6,13 @@ public class BinaryTree {
         MyBinaryTree mTree = new MyBinaryTree(4);
         mTree.add(5);
         mTree.add(6);
+        mTree.add(7);
+        mTree.add(2);
+        mTree.add(8);
         mTree.levelOrderTraversal();
+        mTree.deleteNode(8);
+        mTree.levelOrderTraversal();
+
     }
 
     static class Node {
@@ -31,14 +37,12 @@ public class BinaryTree {
         }
 
         MyBinaryTree(int rootVal) {
-            Node tempNode = new Node(rootVal);
-            this.root = tempNode;
+            root = new Node(rootVal);
 
         }
 
         void levelOrderTraversal() {
             if (root == null) {
-                // System.out.println("Empty Tree");
                 return;
             }
             Queue<Node> q = new ArrayDeque<>();
@@ -104,6 +108,38 @@ public class BinaryTree {
                 }
             }
             return false;
+        }
+
+        int height(Node root) {
+            if (root == null) {
+                return -1;
+            }
+            return Math.max(height(root.left), height(root.right)) + 1;
+        }
+
+        void deleteNode(int deleteVal) {
+            // NULL not removing deepest node
+            if (root == null) {
+                return;
+            } else {
+                Node keyNode = null, lastNode = null;
+                Queue<Node> q = new ArrayDeque<>();
+                q.offer(root);
+                while (!q.isEmpty()) {
+                    lastNode = q.poll();
+                    if (lastNode.val == deleteVal) {
+                        keyNode = lastNode;
+                    }
+                    if (lastNode.left != null) {
+                        q.offer(lastNode.left);
+                    }
+                    if (lastNode.right != null) {
+                        q.offer(lastNode.right);
+                    }
+                }
+                keyNode.val = lastNode.val;
+                lastNode = null;
+            }
         }
 
         void deleteTree() {
