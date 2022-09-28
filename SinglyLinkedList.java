@@ -4,7 +4,11 @@ public class SinglyLinkedList {
         MySinglyLinkedList newList = new MySinglyLinkedList();
         newList.add(1);
         newList.add(2);
-        newList.removeNthFromEnd(newList.head, 2);
+        newList.add(3);
+        newList.add(4);
+        newList.add(5);
+        newList.add2(6, 6);
+        newList.printList();
     }
 
     static class Node {
@@ -86,15 +90,14 @@ public class SinglyLinkedList {
         void add(int val, int index) {
             if (index == 0) {
                 addLast(val);
-            } else if (index == size - 1) {
+            } else if (index == size) {
                 addFirst(val);
             } else {
-                // Debug this section, adding at a specific indexes don't work
                 Node addNode = new Node(val);
                 Node tempNode = tail;
-                int currIndex = 0;
+                int currIndex = 1;
                 while (tempNode != null) {
-                    if (currIndex - 1 == index) {
+                    if (currIndex == index) {
                         addNode.next = tempNode.next;
                         tempNode.next = addNode;
                         size++;
@@ -104,6 +107,24 @@ public class SinglyLinkedList {
                     currIndex++;
                 }
             }
+        }
+
+        void add2(int val, int index) {
+            Node addNode = new Node(val);
+            Node tempNode = new Node(val, tail);
+            Node newTail = tempNode;
+            int currIndex = 0;
+            while (tempNode != null) {
+                if (currIndex == index) {
+                    addNode.next = tempNode.next;
+                    tempNode.next = addNode;
+                    size++;
+                    break;
+                }
+                tempNode = tempNode.next;
+                currIndex++;
+            }
+            tail = newTail.next;
         }
 
         void addFirst(int val) {
