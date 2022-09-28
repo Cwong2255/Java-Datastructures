@@ -2,13 +2,9 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
         MySinglyLinkedList newList = new MySinglyLinkedList();
-        newList.add(0);
+        newList.add(1);
         newList.add(2);
-        newList.add(3);
-        newList.add(4);
-        newList.add(1, 1);
-        newList.printList();
-
+        newList.removeNthFromEnd(newList.head, 2);
     }
 
     static class Node {
@@ -37,6 +33,27 @@ public class SinglyLinkedList {
             head = new Node();
             tail = new Node();
             size = 0;
+        }
+
+        Node removeNthFromEnd(Node head, int n) {
+            // LeetCode 19. Remove Nth Node From End of List
+            if (tail.next == null) {
+                tail = null;
+                return tail;
+            }
+            Node dummy = new Node(-1, tail);
+            Node slow = dummy;
+            Node fast = tail;
+            while (n != 0) {
+                fast = fast.next;
+                n--;
+            }
+            while (fast != null) {
+                fast = fast.next;
+                slow = slow.next;
+            }
+            slow.next = slow.next.next;
+            return dummy.next;
         }
 
         void printList() {
