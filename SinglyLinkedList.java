@@ -7,7 +7,7 @@ public class SinglyLinkedList {
         newList.add(3);
         newList.add(4);
         newList.add(5);
-        newList.add2(6, 6);
+        newList.remove(3);
         newList.printList();
     }
 
@@ -142,27 +142,20 @@ public class SinglyLinkedList {
             }
         }
 
-        int remove(int index) {
-            if (index == 0) {
-                return removeLast();
-            } else if (index == size - 1) {
-                return removeFirst();
-            } else {
-                // Debug this section, removing at a specific index does not work
-                Node tempNode = tail;
-                int currIndex = 0;
-                while (tempNode != null) {
-                    if (currIndex - 1 == index) {
-                        int tempVal = tempNode.next.val;
-                        tempNode.next = tempNode.next;
-                        size--;
-                        return tempVal;
-                    }
-                    tempNode = tempNode.next;
-                    currIndex++;
+        void remove(int index) {
+            Node prevNode = new Node(-1, tail);
+            Node currentNode = tail;
+            Node newTail = prevNode;
+            int currIndex = 0;
+            while (currentNode != null) {
+                if (currIndex == index) {
+                    prevNode.next = currentNode.next;
                 }
-                return -1;
+                prevNode = prevNode.next;
+                currentNode = currentNode.next;
+                currIndex++;
             }
+            tail = newTail.next;
         }
 
         int removeFirst() {
